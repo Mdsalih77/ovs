@@ -114,7 +114,7 @@ const Userdata = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((u) => (
+                        {Array.isArray(users) && users.map((u) => (
                             <tr key={u._id}>
                                 <td>{u.name}</td>
                                 <td>{u.dob}</td>
