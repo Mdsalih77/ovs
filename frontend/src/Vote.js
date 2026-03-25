@@ -8,10 +8,10 @@ const Vote = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const c = await axios.get("https://ovs-gmwq.onrender.com");
+    const c = await axios.get("https://ovs-gmwq.onrender.com/api/candidates");
     setCandidates(c.data);
 
-    const s = await axios.get("https://ovs-gmwq.onrender.com");
+    const s = await axios.get("https://ovs-gmwq.onrender.com/api/dashboard/status");
     setPublishResult(s.data.publishResult);
   };
 
@@ -23,7 +23,7 @@ const Vote = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `https://ovs-gmwq.onrender.com/${id}`,
+        `https://ovs-gmwq.onrender.com/api/vote/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -62,7 +62,7 @@ const Vote = () => {
           {candidates.map((c) => (
             <div key={c._id} className="candidate-card">
               <img
-                src={`http://localhost:5000/uploads/${c.image}`}
+                src={`https://ovs-gmwq.onrender.com/uploads/${c.image}`}
                 alt={c.name}
                 width="200"
               />

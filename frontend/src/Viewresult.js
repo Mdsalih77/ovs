@@ -10,13 +10,13 @@ const Viewresult = () => {
   const fetchResults = async () => {
     try {
       const status = await axios.get(
-        "https://ovs-gmwq.onrender.com"
+        "https://ovs-gmwq.onrender.com/api/dashboard/status"
       );
 
       setPublished(status.data.publishResult);
 
       if (status.data.publishResult) {
-        const res = await axios.get("https://ovs-gmwq.onrender.com");
+        const res = await axios.get("https://ovs-gmwq.onrender.com/api/results");
         setResults(res.data);
       }
     } catch (err) {

@@ -15,7 +15,7 @@ const Userdata = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const res = await axios.get("https://ovs-gmwq.onrender.com");
+        const res = await axios.get("https://ovs-gmwq.onrender.com/api/users");
         setUsers(res.data);
     };
 
@@ -31,7 +31,7 @@ const Userdata = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.post("https://ovs-gmwq.onrender.com", formData);
+        await axios.post("https://ovs-gmwq.onrender.com/api/users", formData);
 
         setFormData({
             name: "",
@@ -114,7 +114,7 @@ const Userdata = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(users) && users.map((u) => (
+                        {users.map((u) => (
                             <tr key={u._id}>
                                 <td>{u.name}</td>
                                 <td>{u.dob}</td>

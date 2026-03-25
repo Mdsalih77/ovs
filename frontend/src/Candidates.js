@@ -16,7 +16,7 @@ const Candidates = () => {
   const [candidates, setCandidates] = useState([]);
 
   const fetchCandidates = async () => {
-    const res = await axios.get("https://ovs-gmwq.onrender.com");
+    const res = await axios.get("https://ovs-gmwq.onrender.com/api/candidates");
     setCandidates(res.data);
   };
 
@@ -43,7 +43,7 @@ const Candidates = () => {
     data.append("party", formData.party);
     data.append("image", formData.image);
 
-    await axios.post("https://ovs-gmwq.onrender.com", data, {
+    await axios.post("https://ovs-gmwq.onrender.com/api/candidates", data, {
       headers: { "Content-Type": "multipart/form-data" }
     });
 
@@ -148,8 +148,7 @@ const Candidates = () => {
             </tr>
           </thead>
           <tbody>
-            {
-            Array.isArray(candidates) && candidates.map((c) => (
+            {candidates.map((c) => (
               <tr key={c._id}>
                 <td>{c.name}</td>
                 <td>{c.age}</td>
@@ -158,7 +157,7 @@ const Candidates = () => {
                 <td>
                   {c.image && (
                     <img
-                      src={`https://ovs-gmwq.onrender.com/${c.image}`}
+                      src={`https://ovs-gmwq.onrender.com/uploads/${c.image}`}
                       alt="candidate"
                       width="60"
                     />
