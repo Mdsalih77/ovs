@@ -14,12 +14,19 @@ const Userdata = () => {
 
     const [users, setUsers] = useState([]);
 
-   const fetchUsers = async () => {
+const fetchUsers = async () => {
   try {
     const res = await axios.get("https://ovs-gmwq.onrender.com/api/users");
-    setUsers(res.data);
-  } catch (err) {
-    console.error("Error fetching users:", err);
+
+    if (Array.isArray(res.data)) {
+      setUsers(res.data);
+    } else {
+      setUsers([]);
+    }
+
+  } catch (error) {
+    console.log("API error:", error);
+    setUsers([]);
   }
 };
 
@@ -117,20 +124,25 @@ const Userdata = () => {
                             <th>status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                     {Array.isArray(users) &&
-  users.map((u) => (
-    <tr key={u._id}>
-      <td>{u.name}</td>
-      <td>{u.dob}</td>
-      <td>{u.aadhaar}</td>
-      <td>{u.emailid}</td>
-      <td style={{ color: u.hasVoted ? "green" : "red" }}>
-        {u.hasVoted ? "Voted" : "Not Voted"}
-      </td>
+                   <tbody>
+  {Array.isArray(users) && users.length > 0 ? (
+    users.map((u) => (
+      <tr key={u._id}>
+        <td>{u.name}</td>
+        <td>{u.dob}</td>
+        <td>{u.aadhaar}</td>
+        <td>{u.emailid}</td>
+        <td style={{ color: u.hasVoted ? "green" : "red" }}>
+          {u.hasVoted ? "Voted" : "Not Voted"}
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5">No users found</td>
     </tr>
-))}
-                    </tbody>
+  )}
+</tbody>
                 </table>
             </div>
         </div>

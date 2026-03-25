@@ -15,12 +15,19 @@ const Candidates = () => {
 
   const [candidates, setCandidates] = useState([]);
 
-const fetchCandidates = async () => {
+const fetchUsers = async () => {
   try {
     const res = await axios.get("https://ovs-gmwq.onrender.com/api/candidates");
-    setCandidates(res.data);
-  } catch (err) {
-    console.error("Error fetching candidates:", err);
+
+    if (Array.isArray(res.data)) {
+      setUsers(res.data);
+    } else {
+      setUsers([]);
+    }
+
+  } catch (error) {
+    console.log("API error:", error);
+    setUsers([]);
   }
 };
 
@@ -151,8 +158,8 @@ const fetchCandidates = async () => {
               <th>Image</th>
             </tr>
           </thead>
-          <tbody>
-    {Array.isArray(candidates) &&
+         <tbody>
+{Array.isArray(candidates) && candidates.length > 0 ? (
   candidates.map((c) => (
     <tr key={c._id}>
       <td>{c.name}</td>
@@ -169,8 +176,13 @@ const fetchCandidates = async () => {
         )}
       </td>
     </tr>
-))}
-          </tbody>
+  ))
+) : (
+<tr>
+<td colSpan="5">No candidates found</td>
+</tr>
+)}
+</tbody>
         </table>
       </div>
     </div>
