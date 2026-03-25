@@ -5,19 +5,23 @@ import Admin from "./Admin";
 const Userdata = () => {
     const [collapsed, setCollapsed] = useState(false);
 
-   const [formData, setFormData] = useState({
-  name: "",
-  dob: "",
-  aadhaar: "",
-  emailid: ""
-});
+    const [formData, setFormData] = useState({
+        name: "",
+        dob: "",
+        aadhaar: "",
+        emailid: ""
+    });
 
     const [users, setUsers] = useState([]);
 
-    const fetchUsers = async () => {
-        const res = await axios.get("https://ovs-gmwq.onrender.com/api/users");
-        setUsers(res.data);
-    };
+   const fetchUsers = async () => {
+  try {
+    const res = await axios.get("https://ovs-gmwq.onrender.com/api/users");
+    setUsers(res.data);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+  }
+};
 
     useEffect(() => {
         fetchUsers();
@@ -91,15 +95,15 @@ const Userdata = () => {
                         maxLength={12}
                         required
                     />
-                 <input
-  className="form-input"
-  type="email"
-  name="emailid"
-  placeholder="Email"
-  value={formData.emailid}
-  onChange={handleChange}
-  required
-/>
+                    <input
+                        className="form-input"
+                        type="email"
+                        name="emailid"
+                        placeholder="Email"
+                        value={formData.emailid}
+                        onChange={handleChange}
+                        required
+                    />
                     <button className="form-btn">Submit</button>
                 </form>
                 <br />
@@ -114,18 +118,18 @@ const Userdata = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((u) => (
-                            <tr key={u._id}>
-                                <td>{u.name}</td>
-                                <td>{u.dob}</td>
-                                <td>{u.aadhaar}</td>
-                                <td>{u.emailid}</td>
-                                <td style={{ color: u.hasVoted ? "green" : "red" }}>
-                                    {u.hasVoted ? "Voted" : "Not Voted"}
-                                </td>
-
-                            </tr>
-                        ))}
+                     {Array.isArray(users) &&
+  users.map((u) => (
+    <tr key={u._id}>
+      <td>{u.name}</td>
+      <td>{u.dob}</td>
+      <td>{u.aadhaar}</td>
+      <td>{u.emailid}</td>
+      <td style={{ color: u.hasVoted ? "green" : "red" }}>
+        {u.hasVoted ? "Voted" : "Not Voted"}
+      </td>
+    </tr>
+))}
                     </tbody>
                 </table>
             </div>

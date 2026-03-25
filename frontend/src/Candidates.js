@@ -15,10 +15,14 @@ const Candidates = () => {
 
   const [candidates, setCandidates] = useState([]);
 
-  const fetchCandidates = async () => {
+const fetchCandidates = async () => {
+  try {
     const res = await axios.get("https://ovs-gmwq.onrender.com/api/candidates");
     setCandidates(res.data);
-  };
+  } catch (err) {
+    console.error("Error fetching candidates:", err);
+  }
+};
 
   useEffect(() => {
     fetchCandidates();
@@ -148,23 +152,24 @@ const Candidates = () => {
             </tr>
           </thead>
           <tbody>
-            {candidates.map((c) => (
-              <tr key={c._id}>
-                <td>{c.name}</td>
-                <td>{c.age}</td>
-                <td>{c.gender}</td>
-                <td>{c.party}</td>
-                <td>
-                  {c.image && (
-                    <img
-                      src={`https://ovs-gmwq.onrender.com/uploads/${c.image}`}
-                      alt="candidate"
-                      width="60"
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
+    {Array.isArray(candidates) &&
+  candidates.map((c) => (
+    <tr key={c._id}>
+      <td>{c.name}</td>
+      <td>{c.age}</td>
+      <td>{c.gender}</td>
+      <td>{c.party}</td>
+      <td>
+        {c.image && (
+          <img
+            src={`https://ovs-gmwq.onrender.com/uploads/${c.image}`}
+            alt="candidate"
+            width="60"
+          />
+        )}
+      </td>
+    </tr>
+))}
           </tbody>
         </table>
       </div>
