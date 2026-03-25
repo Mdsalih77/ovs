@@ -15,19 +15,19 @@ const Candidates = () => {
 
   const [candidates, setCandidates] = useState([]);
 
-const fetchUsers = async () => {
+const fetchCandidates = async () => {
   try {
     const res = await axios.get("https://ovs-gmwq.onrender.com/api/candidates");
 
     if (Array.isArray(res.data)) {
-      setUsers(res.data);
+      setCandidates(res.data);
     } else {
-      setUsers([]);
+      setCandidates([]);
     }
 
   } catch (error) {
     console.log("API error:", error);
-    setUsers([]);
+    setCandidates([]);
   }
 };
 
