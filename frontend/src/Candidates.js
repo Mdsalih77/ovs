@@ -16,7 +16,7 @@ const Candidates = () => {
   const [candidates, setCandidates] = useState([]);
 
   const fetchCandidates = async () => {
-    const res = await axios.get("http://localhost:5000/api/candidates");
+    const res = await axios.get("https://ovs-gmwq.onrender.com");
     setCandidates(res.data);
   };
 

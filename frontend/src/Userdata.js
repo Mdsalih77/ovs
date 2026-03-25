@@ -15,7 +15,7 @@ const Userdata = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const res = await axios.get("http://localhost:5000/api/users");
+        const res = await axios.get("https://ovs-gmwq.onrender.com");
         setUsers(res.data);
     };
 
@@ -31,7 +31,7 @@ const Userdata = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.post("http://localhost:5000/api/users", formData);
+        await axios.post("https://ovs-gmwq.onrender.com", formData);
 
         setFormData({
             name: "",

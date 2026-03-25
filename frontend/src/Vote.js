@@ -8,10 +8,10 @@ const Vote = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const c = await axios.get("http://localhost:5000/api/candidates");
+    const c = await axios.get("https://ovs-gmwq.onrender.com");
     setCandidates(c.data);
 
-    const s = await axios.get("http://localhost:5000/api/dashboard/status");
+    const s = await axios.get("https://ovs-gmwq.onrender.com");
     setPublishResult(s.data.publishResult);
   };
 
@@ -23,7 +23,7 @@ const Vote = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `http://localhost:5000/api/vote/${id}`,
+        `https://ovs-gmwq.onrender.com/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

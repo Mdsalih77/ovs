@@ -11,13 +11,13 @@ const Dashboard = () => {
   const [totalVoted, setTotalVoted] = useState(0);
 
   const fetchStatus = async () => {
-    const res = await axios.get("http://localhost:5000/api/dashboard/status");
+    const res = await axios.get("https://ovs-gmwq.onrender.com");
     setPublishResult(res.data.publishResult);
   };
 
   const fetchCounts = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/dashboard/stats");
+    const res = await axios.get("https://ovs-gmwq.onrender.com");
 
     setTotalUsers(res.data.users);
     setTotalCandidates(res.data.candidates);
@@ -29,7 +29,7 @@ const Dashboard = () => {
 };
 
   const togglePublish = async () => {
-    await axios.post("http://localhost:5000/api/dashboard/publish", {
+    await axios.post("https://ovs-gmwq.onrender.com", {
       publishResult: !publishResult,
     });
     setPublishResult(!publishResult);

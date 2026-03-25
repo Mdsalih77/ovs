@@ -25,7 +25,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/otp/send-otp", {
+      await axios.post("https://ovs-gmwq.onrender.com", {
         email: formData.email,
       });
 
@@ -45,7 +45,7 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:5000/api/otp/verify-otp",
+        "https://ovs-gmwq.onrender.com",
         {
           ...formData,
           otp,
