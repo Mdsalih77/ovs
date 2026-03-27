@@ -4,10 +4,9 @@ import User from "../models/usermodel.js";
 
 let otpStore = {};
 
+// Gmail transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
@@ -19,16 +18,22 @@ export const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
 
+    if (!email) {
+      return res.status(400).json({ message: "Email required" });
+    }
+
     const otp = Math.floor(100000 + Math.random() * 900000);
 
     otpStore[email] = otp;
 
-    await transporter.sendMail({
+    const mailOptions = {
       from: process.env.EMAIL,
       to: email,
       subject: "Your OTP for Voting Login",
       text: `Your OTP is ${otp}`,
-    });
+    };
+
+    await transporter.sendMail(mailOptions);
 
     res.json({ message: "OTP sent successfully" });
 
@@ -41,10 +46,9 @@ export const sendOtp = async (req, res) => {
 // Verify OTP + Login
 export const verifyOtp = async (req, res) => {
   try {
-
     const { email, otp, name, dob, aadhaar } = req.body;
 
-    if (otpStore[email] != otp) {
+    if (!otpStore[email] || otpStore[email] != otp) {
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
@@ -52,7 +56,7 @@ export const verifyOtp = async (req, res) => {
       name: name,
       dob: dob,
       aadhaar: aadhaar,
-      emailid: email
+      emailid: email,
     });
 
     if (!user) {
@@ -67,10 +71,13 @@ export const verifyOtp = async (req, res) => {
 
     delete otpStore[email];
 
-    res.json({ token });
+    res.json({
+      message: "Login successful",
+      token,
+    });
 
   } catch (error) {
-    console.log(error);
+    console.log("VERIFY ERROR:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
