@@ -31,8 +31,6 @@ const Login = () => {
 
       alert("OTP sent successfully");
       setOtpSent(true);
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to send OTP");
     } finally {
       setLoading(false);
     }
